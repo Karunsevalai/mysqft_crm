@@ -3,10 +3,16 @@ from flask_cors import CORS
 import requests  # <-- needed to send to Discord
 
 app = Flask(__name__)
-CORS(app)  # Allow frontend to call backend
+
+CORS(app, resources={r"/*": {"origins": "https://chennai.mysqft.in"}})
+#CORS(app)  # Allow frontend to call backend
 
 # Replace with your Discord Webhook URL
 DISCORD_WEBHOOK_URL = "https://discord.com/api/webhooks/1408483674650972231/cWs0t0oBSndxTCkvSFCF6f3Bd7YwgbvzSL3F8sOpC9JhTBcvV5j4QbyPBqnQvckF3CC6"
+
+@app.route("/ping", methods=["GET"])
+def ping():
+    return jsonify({"status": "ok"}), 200
 
 
 @app.route("/submit", methods=["POST", "GET"])
